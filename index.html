@@ -63,7 +63,7 @@
       </div>
       <div class="row">
         <div class="col col-md-2 col-1 time-block hour">1pm</div>
-        <input class="col col-md-8 col-2 past present future"></input>
+        <input placeholder="Lunch" class="col col-md-8 col-2 past present future"></input>
         <button class="col col-md-2 col-3 saveBtn">Save</button>
       </div>
       <div class="row">
@@ -96,17 +96,44 @@
     <script src="scheduler.js" type="text/javascript"></script>
     <script>
 
+//here I decided to use military time so that later on when I use == it won't be confused by numbers
+var time = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
+
 var today = $("#currentDay");
-var saveBtn = $(".saveBtn");
-var userInput =$(".input");
 var ts = Date.now()
 var m = moment(ts)
 // console.log(m.toString())
 m.format('dddd, MMMM Do YYYY')
 // console.log(m.format('dddd, MMMM Do YYYY'))
 var todayDate = m.format('dddd, MMMM Do YYYY');
+today.text(todayDate)
+// m.format('HH')
+// console.log(m.format('HH'))
+currentHour = m.format('HH')
 
-$('#currentDay').text(todayDate)
+var userInput = $("input");
+for(i=0; i<time.length; i++) {
+  userInput.attr("id", "time[i]")
+  // Here i have created a loop so that an id is created for each input whereby they each get a number for an id.
+}
+
+// console.log(userInput.attr("id"))
+var timeId = userInput.attr("time[i]")
+if (currentHour == timeId){
+  userInput.removeAttr("class" "future")
+}
+if (currentHour > timeId){
+  userInput.removeAttr("class", "present future")
+}
+// these should be turning gray (at night) because it already happened. 
+
+
+
+
+//when figuring out if the time is the same as each hour you stringify the time and then take the first number from each time and array and see if they match up 
+
+var saveBtn = $(".saveBtn");
+
 
 
 
